@@ -80,7 +80,7 @@ int PositionsProvider::loadData(){
 
     //Set the size of the Arrays containing the positions using the first line.
     firstLine = firstLine.simplified();
-    QStringList lineParts = firstLine.split(QLatin1String(" "), QString::SkipEmptyParts);
+    QStringList lineParts = firstLine.split(QLatin1String(" "), Qt::SkipEmptyParts);
     nbCoordinates = lineParts.count();
     dataType k = nbCoordinates;
     positions.setSize(nbPositions,nbCoordinates);
@@ -111,7 +111,7 @@ int PositionsProvider::loadData(){
     }
 
     positionFile.close();
-    qDebug() << "Loading pos file into memory: "<<Timer() << endl;
+    qDebug() << "Loading pos file into memory: "<<Timer() << Qt::endl;
 
 
     //The number of positions read has to be coherent with the number of positions read.

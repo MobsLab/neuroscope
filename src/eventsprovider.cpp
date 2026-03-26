@@ -15,9 +15,11 @@
  *                                                                         *
  ***************************************************************************/
 //QT include files
+#include <algorithm>
 #include <QStringList>
 #include <QFileInfo> 
-#include <QRegExp>
+#include <QtCore/QRegularExpression>
+#define QRegExp QRegularExpression
 
 #include <QTextStream>
 #include <QList>
@@ -52,7 +54,7 @@ EventsProvider::EventsProvider(const QString &fileUrl, double currentSamplingRat
 }
 
 EventsProvider::~EventsProvider(){
-    qDebug()<<"in ~EventsProvider "<<endl;
+    qDebug()<<"in ~EventsProvider "<<Qt::endl;
 }
 
 int EventsProvider::loadData(){
@@ -61,7 +63,7 @@ int EventsProvider::loadData(){
     //Get the number of events
     nbEvents = Utilities::getNbLines(fileName);
 
-    //qDebug()<<"nbEvents "<<nbEvents<<endl;
+    //qDebug()<<"nbEvents "<<nbEvents<<Qt::endl;
 
     if(nbEvents == -1){
         events.setSize(0,0);
@@ -107,7 +109,7 @@ int EventsProvider::loadData(){
     }
 
     eventFile.close();
-    qDebug()<< "Loading evt file into memory: "<<Timer() << endl;
+    qDebug()<< "Loading evt file into memory: "<<Timer() << Qt::endl;
 
 
     //The number of events read has to be coherent with the number of events read.
@@ -1200,7 +1202,7 @@ void EventsProvider::addEventDescription(QString eventDescriptionToAdd){
 
     descriptions.append(EventDescription(eventDescriptionToAdd));
 
-    qSort(descriptions);
+    std::sort(descriptions.begin(), descriptions.end());
     long maxSize = 0;
     long sum = 0;
     long sumOfSquares = 0;
@@ -1253,7 +1255,7 @@ void EventsProvider::removeEventDescription(QString eventDescriptionToRemove){
     QList<EventDescription> newDescriptions = eventIds.keys();
     newDescriptions.removeAll(EventDescription(eventDescriptionToRemove));
 
-    qSort(newDescriptions);
+    std::sort(newDescriptions.begin(), newDescriptions.end());
     long maxSize = 0;
     long sum = 0;
     long sumOfSquares = 0;

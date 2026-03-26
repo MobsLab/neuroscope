@@ -19,7 +19,7 @@
 #include "channelmimedata.h"
 // include files for Qt
 #include <QCursor>
-#include <QTextCodec>
+//#include <QTextCodec>
 #include <QMimeData>
 
 #include <QDropEvent>
@@ -196,7 +196,7 @@ bool ChannelIconView::dropMimeData(int index, const QMimeData * mimeData, Qt::Dr
 void ChannelIconView::mousePressEvent(QMouseEvent* event)
 {
     //If the user did not clicked on an item, ignore the click
-    QListWidgetItem* item = itemAt(event->pos());
+    QListWidgetItem* item = itemAt(event->position().toPoint());
     if (item == 0L)
         return;
 

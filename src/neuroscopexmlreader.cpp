@@ -44,7 +44,7 @@ bool NeuroscopeXmlReader::parseFile(const QString& url,fileType type){
     int errorRow;
     int errorCol;
     if ( !docElement.setContent( &input, &errorMsg, &errorRow, &errorCol ) ) {
-        qWarning() << "Unable to load document.Parse error in " << url << ", line " << errorRow << ", col " << errorCol << ": " << errorMsg << endl;
+        qWarning() << "Unable to load document.Parse error in " << url << ", line " << errorRow << ", col " << errorCol << ": " << errorMsg << Qt::endl;
         return false;
     }
 

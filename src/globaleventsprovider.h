@@ -25,6 +25,7 @@
 
 #include <QList>
 #include <QMap>
+#include <itemcolors.h>
 //include files for the application
 #include <dataprovider.h>
 #include <types.h>

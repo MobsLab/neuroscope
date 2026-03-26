@@ -18,7 +18,7 @@
 #include "itemiconview.h"
 // include files for Qt
 #include <QCursor>
-#include <QTextCodec>
+//#include <QTextCodec>
 
 #include <QMouseEvent>
 #include <QDebug>
@@ -97,7 +97,7 @@ void ItemIconView::wheelEvent ( QWheelEvent * event )
 
 void ItemIconView::mousePressEvent ( QMouseEvent * event )
 {
-    QListWidgetItem *item = itemAt(event->pos());
+    QListWidgetItem *item = itemAt(event->position().toPoint());
     if(!item)
         return;
     if(event->button() == Qt::LeftButton && (event->modifiers() & Qt::AltModifier) && (event->modifiers() & Qt::ControlModifier)){

@@ -184,7 +184,7 @@ int ClustersProvider::loadData(){
         return INCORRECT_CONTENT;
     }
 
-    qDebug() << "Loading clu file into memory: "<<Timer() << endl;
+    qDebug() << "Loading clu file into memory: "<<Timer() << Qt::endl;
 
     //Initialize the variables
     previousStartTime = 0;
@@ -363,7 +363,7 @@ void ClustersProvider::retrieveData(long startTime,long endTime,QObject* initiat
             data(1,count + 1) = static_cast<dataType>(floor(0.5 + currentTime));
             data(2,count + 1) = clusters(1,startIndex);
 
-            //if(data(2,count + 1) ==9 || data(2,count + 1) == 8)qDebug()<<" in retrieveData, data(1,count + 1) " <<data(1,count + 1)<<" data(2,count + 1) " <<data(2,count + 1)<<endl;
+            //if(data(2,count + 1) ==9 || data(2,count + 1) == 8)qDebug()<<" in retrieveData, data(1,count + 1) " <<data(1,count + 1)<<" data(2,count + 1) " <<data(2,count + 1)<<Qt::endl;
 
 
             count++;
@@ -383,7 +383,7 @@ void ClustersProvider::retrieveData(long startTime,long endTime,QObject* initiat
     }
 
 
-    qDebug()<<" in retrieveData, count " <<count<<" startInRecordingUnits " <<startInRecordingUnits<<" endInRecordingUnits " <<endInRecordingUnits<<" endTime " <<endTime<<endl;
+    qDebug()<<" in retrieveData, count " <<count<<" startInRecordingUnits " <<startInRecordingUnits<<" endInRecordingUnits " <<endInRecordingUnits<<" endTime " <<endTime<<Qt::endl;
 
 
     //Store the data in a array of the good size
@@ -483,7 +483,7 @@ void ClustersProvider::requestNextClusterData(long startTime, long timeFrame, co
         //look up for the startIndex index by index
         time = clusters(2,newStartIndex);
 
-        qDebug()<<"newStartIndex " <<newStartIndex<<" time " <<time<<" nbSpikes " <<nbSpikes <<endl;
+        qDebug()<<"newStartIndex " <<newStartIndex<<" time " <<time<<" nbSpikes " <<nbSpikes << Qt::endl;
 
         if(time < startInRecordingUnits && (newStartIndex < nbSpikes)){
             while(time < startInRecordingUnits){
@@ -636,7 +636,7 @@ void ClustersProvider::requestNextClusterData(long startTime, long timeFrame, co
     }
 
 
-    qDebug()<<" count " <<count <<endl;
+    qDebug()<<" count " <<count << Qt::endl;
 
 
     //Store the data in a array of the good size

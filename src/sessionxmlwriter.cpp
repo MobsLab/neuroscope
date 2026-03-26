@@ -60,7 +60,8 @@ bool SessionXmlWriter::writeTofile(const QString& url){
     QString xmlDocument = doc.toString();
 
     QTextStream stream(&sessionFile);
-    stream.setCodec("UTF-8");
+    // Qt6 is UTF-8 by default.
+    // stream.setCodec("UTF-8");
     stream<< xmlDocument;
     sessionFile.close();
 

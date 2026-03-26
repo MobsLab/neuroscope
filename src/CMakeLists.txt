@@ -44,18 +44,31 @@ set(neuroscope_SRCS
 	propertieslayout.cpp
 	)
 
-qt4_add_resources(neuroscope_SRCS neuroscope-icons.qrc)
-
-set(neuroscope_UI  propertieslayout.ui prefdefaultslayout.ui positionpropertieslayout.ui prefgenerallayout.ui clusterpropertieslayout.ui)
-
-qt4_wrap_ui(neuroscope_SRCS ${neuroscope_UI})
+if(Qt6Core_FOUND)
+  qt_add_resources(neuroscope_SRCS neuroscope-icons.qrc)
+  set(neuroscope_UI  propertieslayout.ui prefdefaultslayout.ui positionpropertieslayout.ui prefgenerallayout.ui clusterpropertieslayout.ui)
+  qt_wrap_ui(neuroscope_SRCS ${neuroscope_UI})
+elseif(Qt5Core_FOUND)
+  qt5_add_resources(neuroscope_SRCS neuroscope-icons.qrc)
+  set(neuroscope_UI  propertieslayout.ui prefdefaultslayout.ui positionpropertieslayout.ui prefgenerallayout.ui clusterpropertieslayout.ui)
+  qt5_wrap_ui(neuroscope_SRCS ${neuroscope_UI})
+else()
+  qt4_add_resources(neuroscope_SRCS neuroscope-icons.qrc)
+  set(neuroscope_UI  propertieslayout.ui prefdefaultslayout.ui positionpropertieslayout.ui prefgenerallayout.ui clusterpropertieslayout.ui)
+  qt4_wrap_ui(neuroscope_SRCS ${neuroscope_UI})
+endif()
 
 add_executable(neuroscope WIN32 ${neuroscope_SRCS} )
 
 
-if(Qt5Core_FOUND)
+if(Qt6Core_FOUND)
+  target_link_libraries( neuroscope ${LIBKLUSTERSSHARED_LIBRARY} Qt6::Widgets Qt6::Xml Qt6::Svg)
+  if(TARGET Qt6::WebEngineWidgets)
+    target_link_libraries( neuroscope Qt6::WebEngineWidgets)
+  endif()
+elseif(Qt5Core_FOUND)
   target_link_libraries( neuroscope ${LIBKLUSTERSSHARED_LIBRARY} Qt5::Widgets Qt5::Xml ${Qt5WebKitWidgets_LIBRARIES})
-else(Qt5Core_FOUND)
+else()
   target_link_libraries( neuroscope ${LIBKLUSTERSSHARED_LIBRARY} ${QT_LIBRARIES} ${QT_QTXML_LIBRARY})
 endif()
 

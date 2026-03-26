@@ -24,7 +24,8 @@
 #include "tracesprovider.h"
 
 #include <QFile>
-#include <QRegExp>
+#include <QtCore/QRegularExpression>
+#define QRegExp QRegularExpression
 #include <QDebug>
 #include <QFileInfo>
 

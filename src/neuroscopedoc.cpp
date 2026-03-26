@@ -16,11 +16,13 @@
  ***************************************************************************/
 
 // include files for Qt
+#include <algorithm>
 #include <QDir>
 #include <QWidget>
 #include <QPixmap>
 #include <QImage>
-#include <QRegExp>
+#include <QtCore/QRegularExpression>
+#define QRegExp QRegularExpression
 
 #include <QList>
 #include <QInputDialog>
@@ -281,7 +283,7 @@ int NeuroscopeDoc::openDocument(const QString& url)
     bool sessionFileExist = false;
     QFileInfo urlFileInfo(url);
     QString fileName = urlFileInfo.fileName();
-    QStringList fileParts = fileName.split(QLatin1Char('.'), QString::SkipEmptyParts);
+    QStringList fileParts = fileName.split(QLatin1Char('.'), Qt::SkipEmptyParts);
     if(fileParts.count() < 2)
         return INCORRECT_FILE;
     qDebug()<<"NeuroscopeDoc::openDocument file correct";
@@ -320,7 +322,7 @@ int NeuroscopeDoc::openDocument(const QString& url)
     }
 
     fileName = QFileInfo(docUrl).fileName();
-    fileParts = fileName.split(".", QString::SkipEmptyParts);
+    fileParts = fileName.split(".", Qt::SkipEmptyParts);
     baseName = fileParts[0];
     for(uint i = 1;i < fileParts.count() - 1; ++i)
         baseName += QLatin1Char('.') + fileParts.at(i);
@@ -629,8 +631,8 @@ NeuroscopeDoc::OpenSaveCreateReturnMessage NeuroscopeDoc::saveSession(){
     for(iterator = providerUrls.begin(); iterator != providerUrls.end(); ++iterator){
         SessionFile sessionFile;
         sessionFile.setUrl(iterator.value());
-        QFileInfo fileInfo = QFileInfo(iterator.value());
-        sessionFile.setModification(fileInfo.lastModified());
+        QFileInfo info = QFileInfo(iterator.value());
+        sessionFile.setModification(info.lastModified());
         DataProvider* provider = providers[iterator.key()];
 
         if(qobject_cast<ClustersProvider*>(provider)){
@@ -770,7 +772,7 @@ void NeuroscopeDoc::channelGroupColorUpdate(int groupId,NeuroscopeView* activeVi
 }
 
 /*void NeuroscopeDoc::channelsColorUpdate(QValueList<int>selectedChannels,NeuroscopeView& view){
-qDebug()<<"in NeuroscopeDoc::channelsColorUpdate"<<endl;
+qDebug()<<"in NeuroscopeDoc::channelsColorUpdate"<<Qt::endl;
 }*/
 
 void NeuroscopeDoc::showCalibration(bool show,NeuroscopeView* activeView){
@@ -1092,8 +1094,8 @@ void NeuroscopeDoc::loadDocumentInformation(NeuroscopeXmlReader reader){
             backgroundImage = reader.getBackgroundImage();
 
         if(!backgroundImage.isEmpty()){
-            QFileInfo fileInfo = QFileInfo(backgroundImage);
-            if(!fileInfo.exists()){
+            QFileInfo info = QFileInfo(backgroundImage);
+            if(!info.exists()){
                 QString imageUrl(backgroundImage);
                 QString fileName = QFileInfo(imageUrl).fileName();
                 imageUrl = docUrl + QDir::separator() + fileName;
@@ -1109,8 +1111,8 @@ void NeuroscopeDoc::loadDocumentInformation(NeuroscopeXmlReader reader){
             traceBackgroundImage = reader.getTraceBackgroundImage();
 
         if(!traceBackgroundImage.isEmpty()){
-            QFileInfo fileInfo = QFileInfo(traceBackgroundImage);
-            if(!fileInfo.exists()){
+            QFileInfo info = QFileInfo(traceBackgroundImage);
+            if(!info.exists()){
                 QString imageUrl = traceBackgroundImage;
                 QString fileName = QFileInfo(imageUrl).fileName();
                 imageUrl = docUrl + QDir::separator() + fileName;
@@ -1366,13 +1368,13 @@ void NeuroscopeDoc::loadSession(NeuroscopeXmlReader reader){
                 if(fileType == SessionFile::CLUSTER){
                     //If the file does not exist in the location specified in the session file (absolute path), look up in the directory
                     //where the session file is. This is useful if you moved your file or you backup them (<=> the absolute path is not good anymore)
-                    QFileInfo fileInfo = QFileInfo(fileUrl).absolutePath();
-                    if(!fileInfo.exists()){
+                    QString fileName = QFileInfo(fileUrl).fileName();
+                    QFileInfo info(fileUrl);
+                    if(!info.exists()){
                         QList<int> ids = selectedClusters[fileUrl];
                         QList<int> skippedIds = skippedClusters[fileUrl];
                         selectedClusters.remove(fileUrl);
                         skippedClusters.remove(fileUrl);
-                        QString fileName = QFileInfo(fileUrl).fileName();
                         fileUrl = QFileInfo(sessionUrl).absolutePath() + QDir::separator() + fileName;
                         selectedClusters.insert(fileUrl,ids);
                         skippedClusters.insert(fileUrl,skippedIds);
@@ -1386,13 +1388,13 @@ void NeuroscopeDoc::loadSession(NeuroscopeXmlReader reader){
                 if(fileType == SessionFile::EVENT){
                     //If the file does not exist in the location specified in the session file (absolute path), look up in the directory
                     //where the session file is. This is useful if you moved your file or ypu backup them (<=> the absolute path is not good anymore)
-                    QFileInfo fileInfo = QFileInfo(fileUrl).absolutePath();
-                    if(!fileInfo.exists()){
+                    QString fileName = QFileInfo(fileUrl).fileName();
+                    QFileInfo info(fileUrl);
+                    if(!info.exists()){
                         QList<int> ids = selectedEvents[fileUrl];
                         QList<int> skippedIds = skippedEvents[fileUrl];
                         selectedEvents.remove(fileUrl);
                         skippedEvents.remove(fileUrl);
-                        QString fileName = QFileInfo(fileUrl).fileName();
                         fileUrl = QFileInfo(sessionUrl).absolutePath() + QDir::separator() + fileName;
                         selectedEvents.insert(fileUrl,ids);
                         skippedEvents.insert(fileUrl,skippedIds);
@@ -1415,9 +1417,9 @@ void NeuroscopeDoc::loadSession(NeuroscopeXmlReader reader){
                 if(fileType == SessionFile::POSITION){
                     //If the file does not exist in the location specified in the session file (absolute path), look up in the directory
                     //where the session file is. This is useful if you moved your file or you backup them (<=> the absolute path is not good anymore)
-                    QFileInfo fileInfo = QFileInfo(fileUrl).absolutePath();
-                    if(!fileInfo.exists()){
-                        QString fileName = QFileInfo(fileUrl).fileName();
+                    QString fileName = QFileInfo(fileUrl).fileName();
+                    QFileInfo info(fileUrl);
+                    if(!info.exists()){
                         fileUrl = QFileInfo(sessionUrl).absolutePath()+QDir::separator() + fileName;
                     }
 
@@ -1427,8 +1429,8 @@ void NeuroscopeDoc::loadSession(NeuroscopeXmlReader reader){
                         if(reader.getBackgroundImage() != "-")
                             backgroundImage = sessionFile.getBackgroundPath();
                         if(!backgroundImage.isEmpty()){
-                            fileInfo = QFileInfo(backgroundImage);
-                            if(!fileInfo.exists()){
+                            QFileInfo info = QFileInfo(backgroundImage);
+                            if(!info.exists()){
                                 QString imageUrl= backgroundImage;
                                 QString fileName = QFileInfo(imageUrl).fileName();
                                 imageUrl = sessionUrl + QDir::separator() + fileName;
@@ -1482,7 +1484,7 @@ void NeuroscopeDoc::loadSession(NeuroscopeXmlReader reader){
             QList<int>::iterator iterator;
             for(iterator = clusterList.begin(); iterator != clusterList.end(); ++iterator)
                 if(!clustersIds.contains(*iterator) && !clustersIdsToSkip.contains(*iterator)) clustersIdsToSkip.append(*iterator);
-            qSort(clustersIdsToSkip);
+            std::sort(clustersIdsToSkip.begin(), clustersIdsToSkip.end());
             view->setClusterProvider(static_cast<ClustersProvider*>(providers[name]),name,providerItemColors[name],true,clustersIds,
                                      &displayGroupsClusterFile,&channelsSpikeGroups,peakSampleIndex - 1,nbSamples - peakSampleIndex,clustersIdsToSkip);
         }
@@ -1515,7 +1517,7 @@ void NeuroscopeDoc::loadSession(NeuroscopeXmlReader reader){
             QMap<int,EventDescription>::iterator iterator;
             for(iterator = eventMap.begin(); iterator != eventMap.end(); ++iterator)
                 if(!eventsIds.contains(iterator.key()) && !eventsIdsToSkip.contains(iterator.key())) eventsIdsToSkip.append(iterator.key());
-            qSort(eventsIdsToSkip);
+            std::sort(eventsIdsToSkip.begin(), eventsIdsToSkip.end());
 
             view->setEventProvider(static_cast<EventsProvider*>(providers[name]),name,providerItemColors[name],true,eventsIds,eventsIdsToSkip);
         }
@@ -1919,9 +1921,9 @@ NeuroscopeDoc::OpenSaveCreateReturnMessage NeuroscopeDoc::loadClusterFile(const 
 
 
     //check if the file still exist before trying to load it
-    QFileInfo fileInfo = QFileInfo(clusterUrl);
+    QFileInfo info = QFileInfo(clusterUrl);
 
-    if(!fileInfo.exists()){
+    if(!info.exists()){
         QApplication::restoreOverrideCursor();
         QMessageBox::critical (0, tr("Error!"),tr("The file %1 does not exist anymore.").arg(clusterUrl));
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -1931,7 +1933,7 @@ NeuroscopeDoc::OpenSaveCreateReturnMessage NeuroscopeDoc::loadClusterFile(const 
 
     bool modified = false;
     //check if the file has been modified since the last session.
-    if(fileInfo.lastModified() != lastModified) modified = true;
+    if(info.lastModified() != lastModified) modified = true;
 
     ClustersProvider* clustersProvider = new ClustersProvider(clusterUrl,datSamplingRate,samplingRate,tracesProvider->getTotalNbSamples(),clusterPosition);
     QString name = clustersProvider->getName();
@@ -2139,9 +2141,9 @@ NeuroscopeDoc::OpenSaveCreateReturnMessage NeuroscopeDoc::loadEventFile(const QS
     }
 
     //check if the file still exist before trying to load it
-    QFileInfo fileInfo = QFileInfo(eventUrl);
+    QFileInfo info = QFileInfo(eventUrl);
 
-    if(!fileInfo.exists()){
+    if(!info.exists()){
         QApplication::restoreOverrideCursor();
         QMessageBox::critical (0, tr("Error!"),tr("The file %1 does not exist anymore.").arg(eventUrl));
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -2149,7 +2151,7 @@ NeuroscopeDoc::OpenSaveCreateReturnMessage NeuroscopeDoc::loadEventFile(const QS
     }
 
     bool modified = false;
-    if(fileInfo.lastModified() != lastModified) modified = true;
+    if(info.lastModified() != lastModified) modified = true;
 
     EventsProvider* eventsProvider = new EventsProvider(eventUrl,samplingRate,eventPosition);
     QString name = eventsProvider->getName();
@@ -2590,7 +2592,7 @@ NeuroscopeDoc::OpenSaveCreateReturnMessage NeuroscopeDoc::createEventFile(const 
 NeuroscopeDoc::OpenSaveCreateReturnMessage NeuroscopeDoc::loadPositionFile(const QString &url, NeuroscopeView* activeView){
     //get the sampling rate for the given position file extension, if there is none already set, use the default
     QString positionFileName = url;
-    QStringList fileParts = positionFileName.split(".", QString::SkipEmptyParts);
+    QStringList fileParts = positionFileName.split(".", Qt::SkipEmptyParts);
     if(fileParts.count() < 2) return INCORRECT_FILE;
     positionFileExtension = fileParts[fileParts.count() - 1];
 
@@ -2636,15 +2638,15 @@ NeuroscopeDoc::OpenSaveCreateReturnMessage NeuroscopeDoc::loadPositionFile(const
     //get the sampling rate for the given position file extension, if there is none already set, use the default
     QString positionUrl = fileUrl;
     QString positionFileName = positionUrl;
-    QStringList fileParts = positionFileName.split(QLatin1String("."), QString::SkipEmptyParts);
+    QStringList fileParts = positionFileName.split(QLatin1String("."), Qt::SkipEmptyParts);
     if(fileParts.count() < 2)
         return INCORRECT_FILE;
     positionFileExtension = fileParts[fileParts.count() - 1];
 
     //check if the file still exist before trying to load it
-    QFileInfo fileInfo = QFileInfo(fileUrl);
+    QFileInfo info = QFileInfo(fileUrl);
 
-    if(!fileInfo.exists()){
+    if(!info.exists()){
         QApplication::restoreOverrideCursor();
         QMessageBox::critical (0, tr("Error!"),tr("The file %1 does not exist anymore.").arg(fileUrl));
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));

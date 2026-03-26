@@ -90,7 +90,7 @@ void BaseFrame::mousePressEvent(QMouseEvent* e){
             //Assign firstClick
             QRect r((QRect)window);
 
-            firstClick = e->pos();
+            firstClick = e->position().toPoint();
 
             /*
             if(r.left() != 0)
@@ -148,9 +148,9 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
             }
 
             if(r.left() != 0) {
-                secondClick = QPoint(e->x(),e->y() - Yborder);
+                secondClick = QPoint(static_cast<int>(e->position().x()), static_cast<int>(e->position().y()) - Yborder);
             }else {
-                secondClick = QPoint(e->x() - Xborder,e->y() - Yborder);
+                secondClick = QPoint(static_cast<int>(e->position().x()) - Xborder, static_cast<int>(e->position().y()) - Yborder);
             }
 
             qDebug()<<" firstClick"<<firstClick<<" secondClick"<<secondClick;
@@ -205,7 +205,7 @@ void BaseFrame::mouseMoveEvent(QMouseEvent* e){
     if(e->buttons() == Qt::LeftButton){
         //Test if a selected rectangle exist, if so draw to erase the previous one,
         if(mRubberBand) {
-            const QRect r = QRect(firstClick, e->pos()).normalized();
+            const QRect r = QRect(firstClick, e->position().toPoint()).normalized();
             if(wholeHeightRectangle)
                 mRubberBand->setGeometry(QRect(r.left(),rect().top(), r.width(), rect().height()));
             else

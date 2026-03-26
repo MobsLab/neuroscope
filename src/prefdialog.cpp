@@ -54,7 +54,7 @@ PrefDialog::PrefDialog(QWidget *parent)
     prefGeneral = new PrefGeneral(w);
     QPageWidgetItem *item = new QPageWidgetItem(prefGeneral,tr("General"));
     item->setHeader(tr("NeuroScope Configuration"));
-    item->setIcon(QIcon(":/shared-icons/folder-open"));
+    item->setIcon(QIcon::fromTheme("folder-open", QIcon(":/icons/folder-open.png")));
 
 
     addPage(item);

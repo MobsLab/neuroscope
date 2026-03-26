@@ -2273,7 +2273,7 @@ void ChannelPalette::dragChannels(const QList<int>& channelIds, const QString &s
 void GroupLabel::mousePressEvent(QMouseEvent* e)
 {
     if(e->button() == Qt::LeftButton) {
-        QPoint firstClick = QWidget::mapToGlobal(e->pos());
+        QPoint firstClick = QWidget::mapToGlobal(e->position().toPoint());
 
         QDrag *drag = new QDrag(this);
         ChannelMimeData *mimeData = new ChannelMimeData;
@@ -2284,7 +2284,7 @@ void GroupLabel::mousePressEvent(QMouseEvent* e)
 
         emit leftClickOnLabel(parent()->objectName());
     }
-    else if(e->button() == Qt::MidButton){
+    else if(e->button() == Qt::MiddleButton){
         emit middleClickOnLabel(parent()->objectName());
     }
 }
@@ -2299,7 +2299,7 @@ void SpaceWidget::dropEvent(QDropEvent *event)
     int groupSource, start;
     ChannelMimeData::getInformation(event->mimeData(), &groupSource, &start);
     //to inform that the target is the SpaceWidget, put -2 as the target group.
-    emit dropLabel(groupSource,-2,start,QWidget::mapToGlobal(event->pos()).y());
+    emit dropLabel(groupSource,-2,start,QWidget::mapToGlobal(event->position().toPoint()).y());
   }
 }
 

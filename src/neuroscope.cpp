@@ -128,7 +128,7 @@ void NeuroscopeApp::initActions()
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     mOpenAction = fileMenu->addAction(tr("&Open..."));
     mOpenAction->setShortcut(QKeySequence::Open);
-    mOpenAction->setIcon(QPixmap(":/shared-icons/document-open"));
+    mOpenAction->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/document-open")));
     connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
     mFileOpenRecent = new QRecentFileAction(this);
@@ -155,12 +155,12 @@ void NeuroscopeApp::initActions()
 
 
     mSaveAction = fileMenu->addAction(tr("Save..."));
-    mSaveAction->setIcon(QPixmap(":/shared-icons/document-save"));
+    mSaveAction->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/document-save")));
     mSaveAction->setShortcut(QKeySequence::Save);
     connect(mSaveAction, SIGNAL(triggered()), this, SLOT(saveSession()));
 
     mSaveAsAction = fileMenu->addAction(tr("&Save As..."));
-    mSaveAsAction->setIcon(QPixmap(":/shared-icons/document-save-as"));
+    mSaveAsAction->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/icons/document-save-as")));
     mSaveAsAction->setShortcut(QKeySequence::SaveAs);
     connect(mSaveAsAction, SIGNAL(triggered()), this, SLOT(slotSessionSaveAs()));
 
@@ -170,7 +170,7 @@ void NeuroscopeApp::initActions()
 
 
     mPrintAction = fileMenu->addAction(tr("&Print"));
-    mPrintAction->setIcon(QPixmap(":/shared-icons/document-print"));
+    mPrintAction->setIcon(QIcon::fromTheme("document-print", QIcon(":/icons/document-print")));
     mPrintAction->setShortcut(QKeySequence::Print);
     connect(mPrintAction, SIGNAL(triggered()), this, SLOT(slotFilePrint()));
 
@@ -182,7 +182,7 @@ void NeuroscopeApp::initActions()
     fileMenu->addSeparator();
 
     mCloseAction = fileMenu->addAction(tr("Close"));
-    mCloseAction->setIcon(QPixmap(":/shared-icons/document-close"));
+    mCloseAction->setIcon(QIcon::fromTheme("document-close", QIcon(":/icons/document-close")));
     connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
 
 
@@ -199,7 +199,7 @@ void NeuroscopeApp::initActions()
     fileMenu->addSeparator();
 
     mQuitAction = fileMenu->addAction(tr("Quit"));
-    mQuitAction->setIcon(QPixmap(":/shared-icons/window-close"));
+    mQuitAction->setIcon(QIcon::fromTheme("window-close", QIcon(":/icons/window-close")));
     mQuitAction->setShortcut(QKeySequence::Quit);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(slotFileQuit()));
 
@@ -209,34 +209,34 @@ void NeuroscopeApp::initActions()
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
 
     mUndo = editMenu->addAction(tr("Undo"));
-    mUndo->setIcon(QPixmap(":/shared-icons/edit-undo"));
+    mUndo->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/edit-undo")));
     mUndo->setShortcut(QKeySequence::Undo);
     connect(mUndo, SIGNAL(triggered()), this, SLOT(slotUndo()));
 
     mRedo = editMenu->addAction(tr("Redo"));
-    mRedo->setIcon(QPixmap(":/shared-icons/edit-redo"));
+    mRedo->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/edit-redo")));
     mRedo->setShortcut(QKeySequence::Redo);
     connect(mRedo, SIGNAL(triggered()), this, SLOT(slotRedo()));
 
     editMenu->addSeparator();
 
     mSelectAll = editMenu->addAction(tr("Select &All"));
-    mSelectAll->setShortcut(Qt::CTRL + Qt::Key_A);
+    mSelectAll->setShortcut(Qt::CTRL | Qt::Key_A);
     connect(mSelectAll,SIGNAL(triggered()), this,SLOT(slotSelectAll()));
 
     editMenu->addSeparator();
 
     mSelectAllExcept0And1 = editMenu->addAction(tr("Select All e&xcept 0 and 1"));
-    mSelectAllExcept0And1->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
+    mSelectAllExcept0And1->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_A);
     connect(mSelectAllExcept0And1,SIGNAL(triggered()), this,SLOT(slotSelectAllWO01()));
 
     mDeselectAll = editMenu->addAction(tr("Deselect All"));
-    mDeselectAll->setShortcut(Qt::CTRL + Qt::Key_U);
+    mDeselectAll->setShortcut(Qt::CTRL | Qt::Key_U);
     connect(mDeselectAll,SIGNAL(triggered()), this,SLOT(slotDeselectAll()));
 
     editMode = editMenu->addAction(tr("&Edit Mode"));
-    editMode->setIcon(QIcon(":/icons/edit"));
-    editMode->setShortcut(Qt::CTRL + Qt::Key_E);
+    editMode->setIcon(QIcon::fromTheme("edit", QIcon(":/icons/edit.png")));
+    editMode->setShortcut(Qt::CTRL | Qt::Key_E);
     editMode->setCheckable(true);
     connect(editMode,SIGNAL(triggered()), this,SLOT(slotEditMode()));
 
@@ -245,39 +245,39 @@ void NeuroscopeApp::initActions()
     //Tools menu
     QMenu *toolMenu = menuBar()->addMenu(tr("T&ool"));
     mZoomTool = toolMenu->addAction(tr("Zoom"));
-    mZoomTool->setIcon(QIcon(":/icons/zoom_tool"));
+    mZoomTool->setIcon(QIcon::fromTheme("zoom_tool", QIcon(":/icons/zoom_tool.png")));
     mZoomTool->setShortcut(Qt::Key_Z);
     connect(mZoomTool,SIGNAL(triggered()), this,SLOT(slotZoom()));
 
 
     mDrawTimeLine = toolMenu->addAction(tr("Draw Time Line"));
-    mDrawTimeLine->setIcon(QIcon(":/icons/time_line_tool"));
+    mDrawTimeLine->setIcon(QIcon::fromTheme("time_line_tool", QIcon(":/icons/time_line_tool.png")));
     mDrawTimeLine->setShortcut(Qt::Key_L);
     connect(mDrawTimeLine,SIGNAL(triggered()), this,SLOT(slotDrawTimeLine()));
 
 
     mSelectTool = toolMenu->addAction(tr("Select Channels"));
-    mSelectTool->setIcon(QIcon(":/icons/select_tool"));
+    mSelectTool->setIcon(QIcon::fromTheme("select_tool", QIcon(":/icons/select_tool.png")));
     mSelectTool->setShortcut(Qt::Key_C);
     connect(mSelectTool,SIGNAL(triggered()), this,SLOT(slotSelect()));
 
     mMeasureTool = toolMenu->addAction(tr("Measure"));
-    mMeasureTool->setIcon(QIcon(":/icons/measure_tool"));
+    mMeasureTool->setIcon(QIcon::fromTheme("measure_tool", QIcon(":/icons/measure_tool.png")));
     mMeasureTool->setShortcut(Qt::Key_V);
     connect(mMeasureTool,SIGNAL(triggered()), this,SLOT(slotMeasure()));
 
     mTimeTool = toolMenu->addAction(tr("Select Time"));
-    mTimeTool->setIcon(QIcon(":/icons/time_tool"));
+    mTimeTool->setIcon(QIcon::fromTheme("time_tool", QIcon(":/icons/time_tool.png")));
     mTimeTool->setShortcut(Qt::Key_T);
     connect(mTimeTool,SIGNAL(triggered()), this,SLOT(slotSelectTime()));
 
     mEventTool = toolMenu->addAction(tr("Select Event"));
-    mEventTool->setIcon(QIcon(":/icons/event_tool"));
+    mEventTool->setIcon(QIcon::fromTheme("event_tool", QIcon(":/icons/event_tool.png")));
     mEventTool->setShortcut(Qt::Key_E);
     connect(mEventTool,SIGNAL(triggered()), this,SLOT(slotSelectEvent()));
 
     addEventToolBarAction = toolMenu->addAction(tr("Add Event"));
-    addEventToolBarAction->setIcon(QIcon(":icons/add_event_tool"));
+    addEventToolBarAction->setIcon(QIcon::fromTheme(":add_event_tool", QIcon(":/icons/:add_event_tool.png")));
     connect(addEventToolBarAction,SIGNAL(triggered()), this,SLOT(addEvent()));
 
     addEventPopup = new QMenu;
@@ -288,42 +288,42 @@ void NeuroscopeApp::initActions()
     //Channels Menu
     QMenu *channelsMenu = menuBar()->addMenu(tr("&Channels"));
     mShowChannel = channelsMenu->addAction(tr("Show &Channels"));
-    mShowChannel->setIcon(QIcon(":/icons/eye"));
-    mShowChannel->setShortcut(Qt::CTRL + Qt::Key_C);
+    mShowChannel->setIcon(QIcon::fromTheme("eye", QIcon(":/icons/eye.png")));
+    mShowChannel->setShortcut(Qt::CTRL | Qt::Key_C);
     connect(mShowChannel,SIGNAL(triggered()), this,SLOT(slotShowChannels()));
 
     mHideChannel = channelsMenu->addAction(tr("&Hide Channels"));
-    mHideChannel->setIcon(QIcon(":/icons/eye_close"));
-    mHideChannel->setShortcut(Qt::CTRL + Qt::Key_H);
+    mHideChannel->setIcon(QIcon::fromTheme("eye_close", QIcon(":/icons/eye_close.png")));
+    mHideChannel->setShortcut(Qt::CTRL | Qt::Key_H);
     connect(mHideChannel,SIGNAL(triggered()), this,SLOT(slotHideChannels()));
 
     channelsMenu->addSeparator();
 
     mMoveToNewGroup = channelsMenu->addAction(tr("&Move Channels to New Group"));
-    mMoveToNewGroup->setIcon(QIcon(":/icons/new_group"));
-    mMoveToNewGroup->setShortcut(Qt::CTRL + Qt::Key_G);
+    mMoveToNewGroup->setIcon(QIcon::fromTheme("new_group", QIcon(":/icons/new_group.png")));
+    mMoveToNewGroup->setShortcut(Qt::CTRL | Qt::Key_G);
     connect(mMoveToNewGroup,SIGNAL(triggered()), this,SLOT(slotCreateGroup()));
 
     mRemoveChannelFromGroup = channelsMenu->addAction(tr("&Remove Channels from Group"));
-    mRemoveChannelFromGroup->setIcon(QIcon(":/icons/remove"));
-    mRemoveChannelFromGroup->setShortcut(Qt::SHIFT + Qt::Key_Delete);
+    mRemoveChannelFromGroup->setIcon(QIcon::fromTheme("remove", QIcon(":/icons/remove.png")));
+    mRemoveChannelFromGroup->setShortcut(Qt::SHIFT | Qt::Key_Delete);
     connect(mRemoveChannelFromGroup,SIGNAL(triggered()), this,SLOT(slotDiscardSpikeChannels()));
 
     mDiscardChannels = channelsMenu->addAction(tr("&Discard Channels"));
-    mDiscardChannels->setIcon(QIcon(":/icons/discard"));
+    mDiscardChannels->setIcon(QIcon::fromTheme("discard", QIcon(":/icons/discard.png")));
     mDiscardChannels->setShortcut(Qt::Key_Delete);
     connect(mDiscardChannels,SIGNAL(triggered()), this,SLOT(slotDiscardChannels()));
 
     channelsMenu->addSeparator();
 
     mKeepChannels = channelsMenu->addAction(tr("&Keep Channels"));
-    mKeepChannels->setIcon(QIcon(":/icons/keep"));
-    mKeepChannels->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_K);
+    mKeepChannels->setIcon(QIcon::fromTheme("keep", QIcon(":/icons/keep.png")));
+    mKeepChannels->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_K);
     connect(mKeepChannels,SIGNAL(triggered()), this,SLOT(slotKeepChannels()));
 
     mSkipChannels = channelsMenu->addAction(tr("&Skip Channels"));
-    mSkipChannels->setIcon(QIcon(":/icons/skip"));
-    mSkipChannels->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    mSkipChannels->setIcon(QIcon::fromTheme("skip", QIcon(":/icons/skip.png")));
+    mSkipChannels->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_S);
     connect(mSkipChannels,SIGNAL(triggered()), this,SLOT(slotSkipChannels()));
     channelsMenu->addSeparator();
 
@@ -360,40 +360,40 @@ void NeuroscopeApp::initActions()
     unitsMenu->addSeparator();
 
     mIncreaseHeight = unitsMenu->addAction(tr("&Increase Height"));
-    mIncreaseHeight->setShortcut(Qt::CTRL + Qt::Key_Plus);
+    mIncreaseHeight->setShortcut(Qt::CTRL | Qt::Key_Plus);
     connect(mIncreaseHeight,SIGNAL(triggered()), this,SLOT(slotIncreaseRasterHeight()));
 
     mDecreaseHeight = unitsMenu->addAction(tr("&Decrease Height"));
-    mDecreaseHeight->setShortcut(Qt::CTRL + Qt::Key_Minus);
+    mDecreaseHeight->setShortcut(Qt::CTRL | Qt::Key_Minus);
     connect(mDecreaseHeight,SIGNAL(triggered()), this,SLOT(slotDecreaseRasterHeight()));
 
     unitsMenu->addSeparator();
 
     mNextSpike = unitsMenu->addAction(tr("&Next Spike"));
-    mNextSpike->setIcon(QIcon(":/icons/forwardCluster"));
-    mNextSpike->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
+    mNextSpike->setIcon(QIcon::fromTheme("forwardCluster", QIcon(":/icons/forwardCluster.png")));
+    mNextSpike->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_F);
     connect(mNextSpike,SIGNAL(triggered()), this,SLOT(slotShowNextCluster()));
 
     mPreviousSpike = unitsMenu->addAction(tr("&Previous Spike"));
-    mPreviousSpike->setIcon(QIcon(":/icons/backCluster"));
-    mPreviousSpike->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B);
+    mPreviousSpike->setIcon(QIcon::fromTheme("backCluster", QIcon(":/icons/backCluster.png")));
+    mPreviousSpike->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_B);
     connect(mPreviousSpike,SIGNAL(triggered()), this,SLOT(slotShowPreviousCluster()));
 
 
     //Events Menu
     QMenu *eventMenu = menuBar()->addMenu(tr("E&vents"));
     mNextEvent = eventMenu->addAction(tr("&Next Event"));
-    mNextEvent->setIcon(QIcon(":/icons/forwardEvent"));
-    mNextEvent->setShortcut(Qt::CTRL + Qt::Key_F);
+    mNextEvent->setIcon(QIcon::fromTheme("forwardEvent", QIcon(":/icons/forwardEvent.png")));
+    mNextEvent->setShortcut(Qt::CTRL | Qt::Key_F);
     connect(mNextEvent,SIGNAL(triggered()), this,SLOT(slotShowNextEvent()));
 
     mPreviousEvent = eventMenu->addAction(tr("&Previous Event"));
-    mPreviousEvent->setIcon(QIcon(":/icons/backEvent"));
-    mPreviousEvent->setShortcut(Qt::CTRL + Qt::Key_B);
+    mPreviousEvent->setIcon(QIcon::fromTheme("backEvent", QIcon(":/icons/backEvent.png")));
+    mPreviousEvent->setShortcut(Qt::CTRL | Qt::Key_B);
     connect(mPreviousEvent,SIGNAL(triggered()), this,SLOT(slotShowPreviousEvent()));
 
     mRemoveEvent = eventMenu->addAction(tr("&Remove Event"));
-    mRemoveEvent->setShortcut(Qt::CTRL + Qt::Key_K);
+    mRemoveEvent->setShortcut(Qt::CTRL | Qt::Key_K);
     connect(mRemoveEvent,SIGNAL(triggered()), this,SLOT(removeEvent()));
 
 
@@ -429,20 +429,20 @@ void NeuroscopeApp::initActions()
 
     greyScale->setChecked(false);
     mIncreaseAllChannelAmplitudes = traceMenu->addAction(tr("&Increase All Channel Amplitudes"));
-    mIncreaseAllChannelAmplitudes->setShortcut(Qt::CTRL + Qt::Key_I);
+    mIncreaseAllChannelAmplitudes->setShortcut(Qt::CTRL | Qt::Key_I);
     connect(mIncreaseAllChannelAmplitudes,SIGNAL(triggered()), this,SLOT(slotIncreaseAllChannelsAmplitude()));
 
 
     mDecreaseAllChannelAmplitudes = traceMenu->addAction(tr("&Decrease All Channel Amplitudes"));
-    mDecreaseAllChannelAmplitudes->setShortcut(Qt::CTRL + Qt::Key_D);
+    mDecreaseAllChannelAmplitudes->setShortcut(Qt::CTRL | Qt::Key_D);
     connect(mDecreaseAllChannelAmplitudes,SIGNAL(triggered()), this,SLOT(slotDecreaseAllChannelsAmplitude()));
 
     mIncreaseSelectedChannelAmplitude = traceMenu->addAction(tr("I&ncrease Selected Channel Amplitudes"));
-    mIncreaseSelectedChannelAmplitude->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_I);
+    mIncreaseSelectedChannelAmplitude->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_I);
     connect(mIncreaseSelectedChannelAmplitude,SIGNAL(triggered()), this,SLOT(slotIncreaseSelectedChannelsAmplitude()));
 
     mDecreaseSelectedChannelAmplitude = traceMenu->addAction(tr("D&ecrease Selected Channel Amplitudes"));
-    mDecreaseSelectedChannelAmplitude->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
+    mDecreaseSelectedChannelAmplitude->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_D);
     connect(mDecreaseSelectedChannelAmplitude,SIGNAL(triggered()), this,SLOT(slotDecreaseSelectedChannelsAmplitude()));
 
     mResetSelectedChannel = traceMenu->addAction(tr("Reset Selected Channel &Offsets"));
@@ -462,7 +462,7 @@ void NeuroscopeApp::initActions()
 
     traceMenu->addSeparator();
     autocenterChannels = traceMenu->addAction(tr("Autocenter Channels"));
-    autocenterChannels->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
+    autocenterChannels->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_A);
     autocenterChannels->setCheckable(true);
     connect(autocenterChannels,SIGNAL(triggered()), this,SLOT(slotAutocenterChannels()));
 
@@ -470,7 +470,7 @@ void NeuroscopeApp::initActions()
 
     traceMenu->addSeparator();
     showHideLabels = traceMenu->addAction(tr("Show &Labels"));
-    showHideLabels->setShortcut(Qt::CTRL + Qt::Key_L);
+    showHideLabels->setShortcut(Qt::CTRL | Qt::Key_L);
     showHideLabels->setCheckable(true);
     connect(showHideLabels,SIGNAL(triggered()), this,SLOT(slotShowLabels()));
 
@@ -479,16 +479,16 @@ void NeuroscopeApp::initActions()
 	 /// Added by M.Zugaro to enable automatic forward paging
     traceMenu->addSeparator();
     mPage = traceMenu->addAction(tr("Auto-advance to end of recording"));
-    mPage->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Space);
+    mPage->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_Space);
     mPage->setCheckable(true);
     connect(mPage,SIGNAL(triggered()), this,SLOT(page()));
 
 	 mAccelerate = traceMenu->addAction(tr("Accelerate"));
-    mAccelerate->setShortcut(Qt::CTRL + Qt::Key_Up);
+    mAccelerate->setShortcut(Qt::CTRL | Qt::Key_Up);
     connect(mAccelerate,SIGNAL(triggered()), this,SLOT(accelerate()));
 
     mDecelerate = traceMenu->addAction(tr("Decelerate"));
-    mDecelerate->setShortcut(Qt::CTRL + Qt::Key_Down);
+    mDecelerate->setShortcut(Qt::CTRL | Qt::Key_Down);
     connect(mDecelerate,SIGNAL(triggered()), this,SLOT(decelerate()));
 
 
@@ -496,15 +496,15 @@ void NeuroscopeApp::initActions()
     QMenu *displaysMenu = menuBar()->addMenu(tr("&Displays"));
 
     mNewDisplay = displaysMenu->addAction(tr("&New Display"));
-    mNewDisplay->setShortcut(Qt::CTRL + Qt::Key_N);
+    mNewDisplay->setShortcut(Qt::CTRL | Qt::Key_N);
     connect(mNewDisplay,SIGNAL(triggered()), this,SLOT(slotNewDisplay()));
 
     mRenameActiveDisplay = displaysMenu->addAction(tr("&Rename Active Display"));
-    mRenameActiveDisplay->setShortcut(Qt::CTRL + Qt::Key_R);
+    mRenameActiveDisplay->setShortcut(Qt::CTRL | Qt::Key_R);
     connect(mRenameActiveDisplay,SIGNAL(triggered()), this,SLOT(slotRenameActiveDisplay()));
 
     mCloseActiveDisplay = displaysMenu->addAction(tr("&Close Active Display"));
-    mCloseActiveDisplay->setShortcut(Qt::CTRL + Qt::Key_W);
+    mCloseActiveDisplay->setShortcut(Qt::CTRL | Qt::Key_W);
     connect(mCloseActiveDisplay,SIGNAL(triggered()), this,SLOT(slotDisplayClose()));
 
 
@@ -541,7 +541,7 @@ void NeuroscopeApp::initActions()
 
     settingsMenu->addSeparator();
     mPreferenceAction = settingsMenu->addAction(tr("Preferences"));
-    mPreferenceAction->setIcon(QIcon(":/shared-icons/configure"));
+    mPreferenceAction->setIcon(QIcon::fromTheme("configure", QIcon(":/icons/configure.png")));
     connect(mPreferenceAction,SIGNAL(triggered()), this,SLOT(executePreferencesDlg()));
 
     //Help menu
@@ -665,13 +665,13 @@ void NeuroscopeApp::initItemPanel(){
     spikeChannelPalette = new ChannelPalette(ChannelPalette::SPIKE,backgroundColor,true,this,"spikePanel");
 
     if(displayPaletteHeaders) {
-        paletteTabsParent->addTab(displayChannelPalette,QIcon(":/icons/anatomy"),tr("Anatomy"));
-        paletteTabsParent->addTab(spikeChannelPalette,QIcon(":/icons/spikes"),tr("Spikes"));
+        paletteTabsParent->addTab(displayChannelPalette,QIcon("anatomy"),tr("Anatomy"));
+        paletteTabsParent->addTab(spikeChannelPalette,QIcon("spikes"),tr("Spikes"));
     } else {
         int index = paletteTabsParent->addTab(displayChannelPalette,QString());
-        paletteTabsParent->setTabIcon(index,QIcon(":/icons/anatomy"));
+        paletteTabsParent->setTabIcon(index,QIcon("anatomy"));
         index = paletteTabsParent->addTab(spikeChannelPalette,QString());
-        paletteTabsParent->setTabIcon(index,QIcon(":/icons/spikes"));
+        paletteTabsParent->setTabIcon(index,QIcon("spikes"));
     }
     paletteTabsParent->hide();
 }
@@ -1152,7 +1152,7 @@ bool NeuroscopeApp::queryClose()
                     title = tr("Modification");
                 }
                 switch(QMessageBox::question(0,title,message,QMessageBox::Cancel|QMessageBox::Discard|QMessageBox::Save)){
-                case QMessageBox::Save://<=> Save
+                case QMessageBox::Save:
                     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
                     if(eventsModified){
                         QApplication::restoreOverrideCursor();
@@ -1162,6 +1162,7 @@ bool NeuroscopeApp::queryClose()
                             case QMessageBox::Close:
                                 break;
                             case QMessageBox::Discard:
+
                                 return false;
                             }
                         }
@@ -1188,13 +1189,15 @@ bool NeuroscopeApp::queryClose()
                         case QMessageBox::Close:
                             break;
                         case QMessageBox::Discard:
+
                             return false;
                         }
                     }
                     break;
-                case QMessageBox::Discard://<=> Discard
+                case QMessageBox::Discard:
                     break;
                 case QMessageBox::Cancel:
+
                     return false;
                 }
             } else {
@@ -1222,6 +1225,7 @@ bool NeuroscopeApp::queryClose()
                     case QMessageBox::Close:
                         break;
                     case QMessageBox::Discard:
+
                         return false;
                     }
                 }
@@ -1387,7 +1391,7 @@ void NeuroscopeApp::slotFileClose(){
                     title = tr("Modification");
                 }
                 switch(QMessageBox::question(0,title,message,QMessageBox::Save|QMessageBox::Cancel|QMessageBox::Discard)){
-                case QMessageBox::Save://<=> Save
+                case QMessageBox::Save:
                     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
                     if(eventsModified){
                         QApplication::restoreOverrideCursor();
@@ -1423,13 +1427,15 @@ void NeuroscopeApp::slotFileClose(){
                         case QMessageBox::Close:
                             break;
                         case QMessageBox::Discard:
+
                             return;
                         }
                     }
                     break;
-                case QMessageBox::Discard://<=> Discard
+                case QMessageBox::Discard:
                     break;
                 case QMessageBox::Cancel:
+
                     return;
                 }
             } else {
@@ -1457,6 +1463,7 @@ void NeuroscopeApp::slotFileClose(){
                     case QMessageBox::Close:
                         break;
                     case QMessageBox::Discard:
+
                         return;
                     }
                 }
@@ -1497,7 +1504,11 @@ void NeuroscopeApp::slotFilePrint()
     QPrinter printer;
 
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    printer.setPageOrientation(QPageLayout::Landscape);
+#else
     printer.setOrientation(QPrinter::Landscape);
+#endif
     printer.setColorMode(QPrinter::Color);
 
     QPrintDialog dialog(&printer, this);
@@ -2384,7 +2395,7 @@ void NeuroscopeApp::slotDisplayClose(){
                     title = tr("Modification");
                 }
                 switch(QMessageBox::warning(0,title,message,QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
-                case QMessageBox::Save://<=> Save
+                case QMessageBox::Save:
                     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
                     if(eventsModified){
                         bool eventSaveStatus = doc->saveEventFiles();
@@ -2394,6 +2405,7 @@ void NeuroscopeApp::slotDisplayClose(){
                             case QMessageBox::Close:
                                 break;
                             case QMessageBox::Discard:
+
                                 return;
                             }
                         }
@@ -2420,13 +2432,15 @@ void NeuroscopeApp::slotDisplayClose(){
                         case QMessageBox::Close:
                             break;
                         case QMessageBox::Discard:
+
                             return;
                         }
                     }
                     break;
-                case QMessageBox::Discard://<=> Discard
+                case QMessageBox::Discard:
                     break;
                 case QMessageBox::Cancel:
+
                     return;
                 }
             }
@@ -2455,6 +2469,7 @@ void NeuroscopeApp::slotDisplayClose(){
                     case QMessageBox::Close:
                         break;
                     case QMessageBox::Discard:
+
                         return;
                     }
                 }
@@ -2809,10 +2824,10 @@ void NeuroscopeApp::createClusterPalette(const QString& clusterFileId)
     ItemPalette* clusterPalette = new ItemPalette(ItemPalette::CLUSTER,backgroundColor,this,"clusterPanel");
     if(displayPaletteHeaders) {
         int index = paletteTabsParent->addTab(clusterPalette,tr("Units"));
-        paletteTabsParent->setTabIcon(index,QIcon(":/icons/clusters"));
+        paletteTabsParent->setTabIcon(index,QIcon("clusters"));
     } else {
         int index = paletteTabsParent->addTab(clusterPalette,QString());
-        paletteTabsParent->setTabIcon(index,QIcon(":/icons/clusters"));
+        paletteTabsParent->setTabIcon(index,QIcon("clusters"));
 
     }
     clusterFileList.append(clusterFileId);
@@ -3022,10 +3037,10 @@ void NeuroscopeApp::createEventPalette(const QString& eventFileId){
     eventFileList.append(eventFileId);
 
     if(displayPaletteHeaders) {
-        paletteTabsParent->addTab(eventPalette,QIcon(":/icons/events"),tr("Events"));
+        paletteTabsParent->addTab(eventPalette,QIcon("events"),tr("Events"));
     } else {
         int index = paletteTabsParent->addTab(eventPalette,QString());
-        paletteTabsParent->setTabIcon(index,QIcon(":/icons/events"));
+        paletteTabsParent->setTabIcon(index,QIcon("events"));
     }
 
 

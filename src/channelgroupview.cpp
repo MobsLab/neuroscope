@@ -31,7 +31,7 @@ ChannelGroupView::ChannelGroupView(bool drag,const QColor& backgroundColor,QWidg
 {
 
     mLayout = new QHBoxLayout;
-    mLayout->setMargin(0);
+    mLayout->setContentsMargins(0, 0, 0, 0);
     mLayout->setSpacing(0);
     setLayout(mLayout);
     setAutoFillBackground(true);
@@ -95,7 +95,7 @@ void ChannelGroupView::dropEvent(QDropEvent* event)
         int groupSource, start;
         ChannelMimeData::getInformation(event->mimeData(), &groupSource, &start);
         const QString groupTarget = this->objectName();
-        emit dropLabel(groupSource,groupTarget.toInt(),start,QWidget::mapToGlobal(event->pos()).y());
+        emit dropLabel(groupSource,groupTarget.toInt(),start,QWidget::mapToGlobal(event->position().toPoint()).y());
     }
 }
 
@@ -109,7 +109,7 @@ void ChannelGroupView::dragEnterEvent(QDragEnterEvent* event){
         event->acceptProposedAction();
     }
     //Enable the parent (ChannelPalette) to ensure that the current group is visible (will scroll if need it)
-    emit dragObjectMoved(QWidget::mapToParent(event->pos()));
+    emit dragObjectMoved(QWidget::mapToParent(event->position().toPoint()));
 }
 
 void ChannelGroupView::setIconView(ChannelIconView *view){
