@@ -665,13 +665,13 @@ void NeuroscopeApp::initItemPanel(){
     spikeChannelPalette = new ChannelPalette(ChannelPalette::SPIKE,backgroundColor,true,this,"spikePanel");
 
     if(displayPaletteHeaders) {
-        paletteTabsParent->addTab(displayChannelPalette,QIcon("anatomy"),tr("Anatomy"));
-        paletteTabsParent->addTab(spikeChannelPalette,QIcon("spikes"),tr("Spikes"));
+        paletteTabsParent->addTab(displayChannelPalette,QIcon(":/icons/anatomy"),tr("Anatomy"));
+        paletteTabsParent->addTab(spikeChannelPalette,QIcon(":/icons/spikes"),tr("Spikes"));
     } else {
         int index = paletteTabsParent->addTab(displayChannelPalette,QString());
-        paletteTabsParent->setTabIcon(index,QIcon("anatomy"));
+        paletteTabsParent->setTabIcon(index,QIcon(":/icons/anatomy"));
         index = paletteTabsParent->addTab(spikeChannelPalette,QString());
-        paletteTabsParent->setTabIcon(index,QIcon("spikes"));
+        paletteTabsParent->setTabIcon(index,QIcon(":/icons/spikes"));
     }
     paletteTabsParent->hide();
 }
@@ -2824,10 +2824,10 @@ void NeuroscopeApp::createClusterPalette(const QString& clusterFileId)
     ItemPalette* clusterPalette = new ItemPalette(ItemPalette::CLUSTER,backgroundColor,this,"clusterPanel");
     if(displayPaletteHeaders) {
         int index = paletteTabsParent->addTab(clusterPalette,tr("Units"));
-        paletteTabsParent->setTabIcon(index,QIcon("clusters"));
+        paletteTabsParent->setTabIcon(index,QIcon(":/icons/clusters"));
     } else {
         int index = paletteTabsParent->addTab(clusterPalette,QString());
-        paletteTabsParent->setTabIcon(index,QIcon("clusters"));
+        paletteTabsParent->setTabIcon(index,QIcon(":/icons/clusters"));
 
     }
     clusterFileList.append(clusterFileId);
@@ -3037,10 +3037,10 @@ void NeuroscopeApp::createEventPalette(const QString& eventFileId){
     eventFileList.append(eventFileId);
 
     if(displayPaletteHeaders) {
-        paletteTabsParent->addTab(eventPalette,QIcon("events"),tr("Events"));
+        paletteTabsParent->addTab(eventPalette,QIcon(":/icons/events"),tr("Events"));
     } else {
         int index = paletteTabsParent->addTab(eventPalette,QString());
-        paletteTabsParent->setTabIcon(index,QIcon("events"));
+        paletteTabsParent->setTabIcon(index,QIcon(":/icons/events"));
     }
 
 
